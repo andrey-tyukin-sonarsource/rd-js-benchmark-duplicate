@@ -1,0 +1,34 @@
+{
+  "name": "test-2023-01-30",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "./node_modules/.bin/jest",
+    "format:routes": "npx prettier --write ./routes",
+    "format:main": "npx prettier --write ./main.js",
+    "format:public": "npx prettier --write ./public",
+    "format:test": "npx prettier --write ./test",
+    "format": "npm run format:routes && npm run format:main && npm run format:public && npm run format:test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/test-732-958/test-2023-01-30.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/test-732-958/test-2023-01-30/issues"
+  },
+  "homepage": "https://github.com/test-732-958/test-2023-01-30#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "fast-levenshtein": "^3.0.0",
+    "jsonschema": "^1.4.1"
+  },
+  "devDependencies": {
+    "jest": "^29.4.2",
+    "prettier": "2.8.4"
+  }
+}
+
