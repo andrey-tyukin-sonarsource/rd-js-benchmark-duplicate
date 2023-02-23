@@ -57,13 +57,13 @@ examples.push({
   ],
 });
 
-function lambdaSink(res, f, s) {
-  res.send("" + eval(f(s)));
-}
-
 router.get("/hof-taking-passthrough-fn-check", (req, res) => {
   const f = (x) => x;
   const s = req.query.input;
+
+  function lambdaSink(res, f, s) {
+    res.send("" + eval(f(s)));
+  }
 
   lambdaSink(res, f, s);
 });
@@ -73,6 +73,10 @@ router.get("/hof-taking-passthrough-fp-check", (req, res) => {
     return "'harmless'";
   };
   const s = req.query.input;
+
+  function lambdaSink(res, f, s) {
+    res.send("" + eval(f(s)));
+  }
 
   lambdaSink(res, f, s);
 });

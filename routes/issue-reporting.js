@@ -32,8 +32,7 @@ function extractIssuesFromSarif(sarifJson) {
   return arr
     .map((e) => {
       const loc = e.most_recent_instance.location;
-      // Note: SARIF's lines are 0-based
-      return `${loc.path}:${loc.start_line + 1}`;
+      return `${loc.path}:${loc.start_line}`;
     })
     .filter((loc) => !loc.includes("issue-reporting"));
 }
