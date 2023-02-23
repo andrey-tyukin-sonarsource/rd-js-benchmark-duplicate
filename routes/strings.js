@@ -1,6 +1,7 @@
 /** Examples related to if-else control flow construct. */
 
 const express = require("express");
+const { reportIssue } = require("./issue-reporting");
 const router = express.Router();
 
 const examples = [];

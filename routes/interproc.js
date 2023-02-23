@@ -4,6 +4,8 @@ const express = require("express");
 const router = express.Router();
 const secret = require("./secret");
 const common = require("./common-examples");
+const { reportIssue } = require("./issue-reporting");
+
 const examples = [];
 
 function customIdentity(x) {

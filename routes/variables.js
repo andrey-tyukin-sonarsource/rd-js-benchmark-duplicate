@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 const common = require("./common-examples");
 const secret = require("./secret");
+const { reportIssue } = require("./issue-reporting");
 const examples = [];
 
 /** Check whether tainted values fed directly into sink are detected. */

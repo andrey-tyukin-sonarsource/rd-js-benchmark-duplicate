@@ -2,6 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
+const { reportIssue } = require("./issue-reporting");
 
 const examples = [];
 

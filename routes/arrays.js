@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 const secret = require("./secret");
 const common = require("./common-examples");
+const { reportIssue } = require("./issue-reporting");
 
 const examples = [];
 
@@ -27,21 +28,7 @@ examples.push({
         "<code>[x][0]</code> should propagate the tainted <code>t</code>",
       route: "/arrays/single-element-array",
       description: "",
-      testCases: [
-        {
-          input: "2 + 2",
-          expectedOutput: "4",
-          description: "Harmless expressions should just be evaluated.",
-        },
-        {
-          input: "(console.log('pwned'), secret)",
-          expectedOutput: secret,
-          description: `
-            All other expressions are also evaluated,
-            so that <code>require('secret')</code> can "steal" the secret flag.
-          `,
-        },
-      ],
+      testCases: common.TAINTED_TO_EVAL_TEST_CASES,
     },
   ],
 });

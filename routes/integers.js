@@ -5,6 +5,7 @@ const router = express.Router();
 const secret = require("./secret");
 const common = require("./common-examples");
 const examples = [];
+const { reportIssue } = require("./issue-reporting");
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);

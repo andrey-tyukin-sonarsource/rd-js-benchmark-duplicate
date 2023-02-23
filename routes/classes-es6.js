@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 const secret = require("./secret");
 const common = require("./common-examples");
+const { reportIssue } = require("./issue-reporting");
 
 const examples = [];
 
@@ -60,35 +61,57 @@ examples.push({
   ],
 });
 
-class MaybeDangerous {
-  constructor(dangerous) {
-    this.dangerous = dangerous;
-  }
+router.get("/boolean-controlled-passthrough-method-fn-check", (req, res) => {
+  // Code duplication intentional: need separate `eval`s
+  class MaybeDangerous {
+    constructor(dangerous) {
+      this.dangerous = dangerous;
+    }
 
-  run(v, res) {
-    this.sink(res, this.passthrough(v));
-  }
+    run(v, res) {
+      this.sink(res, this.passthrough(v));
+    }
 
-  passthrough(s) {
-    if (this.dangerous) {
-      return s;
-    } else {
-      return "'harmless'";
+    passthrough(s) {
+      if (this.dangerous) {
+        return s;
+      } else {
+        return "'harmless'";
+      }
+    }
+
+    sink(res, s) {
+      res.send("" + eval(s));
     }
   }
-
-  sink(res, s) {
-    res.send("" + eval(s));
-  }
-}
-
-router.get("/boolean-controlled-passthrough-method-fn-check", (req, res) => {
   const reallyDangerous = new MaybeDangerous(true);
   const v = req.query.input;
   reallyDangerous.run(v, res);
 });
 
 router.get("/boolean-controlled-passthrough-method-fp-check", (req, res) => {
+  // Code duplication intentional: need separate `eval`s
+  class MaybeDangerous {
+    constructor(dangerous) {
+      this.dangerous = dangerous;
+    }
+
+    run(v, res) {
+      this.sink(res, this.passthrough(v));
+    }
+
+    passthrough(s) {
+      if (this.dangerous) {
+        return s;
+      } else {
+        return "'harmless'";
+      }
+    }
+
+    sink(res, s) {
+      res.send("" + eval(s));
+    }
+  }
   const notDangerous = new MaybeDangerous(false);
   const v = req.query.input;
   notDangerous.run(v, res);
@@ -117,34 +140,55 @@ examples.push({
   ],
 });
 
-class StaticMaybeDangerous {
-  static run(dangerous, s, res) {
-    StaticMaybeDangerous.sink(
-      res,
-      StaticMaybeDangerous.passthrough(dangerous, s)
-    );
-  }
-
-  static passthrough(dangerous, s) {
-    if (dangerous) {
-      return s;
-    } else {
-      return "'harmless'";
-    }
-  }
-
-  static sink(res, s) {
-    res.send("" + eval(s));
-  }
-}
-
 router.get("/static-boolean-controlled-passthrough-fn-check", (req, res) => {
   const s = req.query.input;
+  // Code duplication intentional: need separate `eval`s
+  class StaticMaybeDangerous {
+    static run(dangerous, s, res) {
+      StaticMaybeDangerous.sink(
+        res,
+        StaticMaybeDangerous.passthrough(dangerous, s)
+      );
+    }
+
+    static passthrough(dangerous, s) {
+      if (dangerous) {
+        return s;
+      } else {
+        return "'harmless'";
+      }
+    }
+
+    static sink(res, s) {
+      res.send("" + eval(s));
+    }
+  }
   StaticMaybeDangerous.run(true, s, res);
 });
 
 router.get("/static-boolean-controlled-passthrough-fp-check", (req, res) => {
   const s = req.query.input;
+  // Code duplication intentional: need separate `eval`s
+  class StaticMaybeDangerous {
+    static run(dangerous, s, res) {
+      StaticMaybeDangerous.sink(
+        res,
+        StaticMaybeDangerous.passthrough(dangerous, s)
+      );
+    }
+
+    static passthrough(dangerous, s) {
+      if (dangerous) {
+        return s;
+      } else {
+        return "'harmless'";
+      }
+    }
+
+    static sink(res, s) {
+      res.send("" + eval(s));
+    }
+  }
   StaticMaybeDangerous.run(false, s, res);
 });
 

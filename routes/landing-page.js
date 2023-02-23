@@ -57,6 +57,8 @@ function renderLandingPage(categories) {
       <br>
       ${renderRunAll(categories)}
       <br>
+      ${renderUploadSarif()}
+      <br>
       ${renderCategories(categories)}
       </div>
     </body>
@@ -187,6 +189,7 @@ function renderRunAll(categories) {
   const allFormIdsAsArgs = allFormIds.map((s) => `'${s}'`).join(", ");
   return `
     <div class="category">
+      <h2>Run All</h2>
       <p>To run all examples at once, press this button:</p>
       <form
         onsubmit="event.preventDefault(); submitForms([${allFormIdsAsArgs}]);"
@@ -241,6 +244,29 @@ function renderDisclaimer() {
       </li>
     </ul>
   </div>`;
+}
+
+/**
+ * A form that allows to upload SARIF (as JSON) to compare the results with
+ * the ground truth.
+ */
+function renderUploadSarif() {
+  return `
+    <div class="category">
+      <h2>Compare with SARIF</h2>
+      <p>
+        To compare the outcomes of "Run All" (this is the ground truth) 
+        with a SARIF produced by some analysis tool, copy-paste the SARIF
+        (as JSON) to the below field, and click on "Compare SARIF to ground truth"
+      </p>
+      <p>(The result is returned as JSON; Clicking on the button will leave
+        the current page)</p>
+      <form action="/issue-reporting/compare-sarif" method="POST">
+        <textarea name="sarif" cols="120" rows="5"></textarea>
+        <input type="submit" value="Compare SARIF to ground truth">
+      </form>
+    </div>
+  `;
 }
 
 module.exports = function (exampleSections) {

@@ -17,7 +17,7 @@ const TAINTED_TO_EVAL_TEST_CASES = [
       and the "secret flag" from <code>require('secret')</code>
       can be "captured".
     `,
-    input: "(console.log('[WARN] The server has been pwned.'), secret)",
+    input: "(reportIssue(), secret)",
     expectedOutput: secret,
   },
 ];
@@ -29,7 +29,7 @@ function fpTestCase(expectedOutput) {
       It shouldn't matter what we pass to the function, the output should
       be harmless.
     `,
-      input: "(console.log('[WARN] The server has been pwned.'), secret)",
+      input: "(reportIssue(), secret)",
       expectedOutput: expectedOutput,
     },
   ];
